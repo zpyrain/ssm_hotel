@@ -28,4 +28,26 @@ public class DeptServiceImpl implements DeptService {
     public List<Dept> findDeptListByPage(DeptVo deptVo) {
         return deptMapper.findDeptListByPage(deptVo);
     }
+
+    /**
+     * 添加部门
+     * @param dept
+     * @return
+     */
+    @Override
+    public int addDept(Dept dept) {
+        //保存创建时间
+        dept.setCreateDate(new Date());
+        return deptMapper.addDept(dept);
+    }
+
+    /**
+     * 修改部门
+     * @param dept
+     * @return
+     */
+    @Override
+    public int updateDept(Dept dept) {
+        return deptMapper.updateDept(dept);
+    }
 }

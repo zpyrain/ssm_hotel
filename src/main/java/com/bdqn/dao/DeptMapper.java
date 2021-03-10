@@ -13,4 +13,18 @@ public interface DeptMapper {
      * @return
      */
     List<Dept> findDeptListByPage(DeptVo deptVo);
+
+    /**
+     * 添加部门
+     * @param dept
+     * @return
+     */
+    int addDept(Dept dept);
+
+    /**
+     * 修改部门
+     * @param dept
+     * @return
+     */
+    int updateDept(Dept dept);
 }

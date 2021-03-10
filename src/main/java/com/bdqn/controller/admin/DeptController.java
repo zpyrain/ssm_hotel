@@ -48,4 +48,42 @@ public class DeptController {
         return new DataGridViewResult(pageInfo.getTotal(),pageInfo.getList());
     }
 
+    /**
+     * 添加部门
+     * @param dept
+     * @return
+     */
+    @RequestMapping("/addDept")
+    public String addDept(Dept dept){
+        Map<String,Object> map = new HashMap<String,Object>();
+        //调用添加部门的方法
+        if(deptService.addDept(dept)>0){
+            map.put(SystemConstant.SUCCESS,true);//成功
+            map.put(SystemConstant.MESSAGE,"添加成功");
+        }else{
+            map.put(SystemConstant.SUCCESS,false);//失败
+            map.put(SystemConstant.MESSAGE,"添加失败");
+        }
+        //将map集合以JSON格式返回
+        return JSON.toJSONString(map);
+    }
+    /**
+     * 修改部门
+     * @param dept
+     * @return
+     */
+    @RequestMapping("/updateDept")
+    public String updateDept(Dept dept){
+        Map<String,Object> map = new HashMap<String,Object>();
+        //调用添加部门的方法
+        if(deptService.updateDept(dept)>0){
+            map.put(SystemConstant.SUCCESS,true);//成功
+            map.put(SystemConstant.MESSAGE,"修改成功");
+        }else{
+            map.put(SystemConstant.SUCCESS,false);//失败
+            map.put(SystemConstant.MESSAGE,"修改失败");
+        }
+        //将map集合以JSON格式返回
+        return JSON.toJSONString(map);
+    }
 }

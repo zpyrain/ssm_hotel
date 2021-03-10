@@ -10,6 +10,23 @@
             </if>
         </where>
     </select>
-
-
+    <!--添加部门-->
+    <insert id="addDept">
+        insert into sys_dept(deptName,address,createDate,remark) values(#{deptName},#{address},#{createDate},#{remark})
+    </insert>
+    <update id="updateDept">
+        update sys_dept
+        <set>
+            <if test="deptName!=null and deptName!=''">
+                deptName = #{deptName},
+            </if>
+            <if test="address!=null and address!=''">
+                address = #{address},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
+        </set>
+        where id =#{id}
+    </update>
 </mapper>
