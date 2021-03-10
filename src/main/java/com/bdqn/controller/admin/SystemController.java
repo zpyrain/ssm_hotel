@@ -43,5 +43,13 @@ public class SystemController {
         return "redirect:/admin/login.html";
     }
 
+    /**
+     * 去到部门管理页面
+     * @return
+     */
+    @RequestMapping("/toDeptManager")
+    public String toDeptManager(){
+        return "admin/dept/deptManager";
+    }
 
 }
