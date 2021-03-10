@@ -59,7 +59,7 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '${pageContext.request.contextPath}/statics/layui/api/table.json',
+            url: '${pageContext.request.contextPath}/admin/dept/list',
             toolbar: '#toolbarDemo',
             cols: [[
                 {field: 'id', width: 120, title: '部门编号',align:'center'},
