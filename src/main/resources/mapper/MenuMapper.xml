@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.dao.MenuMapper">
+    <!-- 查询所有菜单列表 -->
+    <select id="findMenuList" resultType="com.bdqn.entity.Menu">
+        select * from sys_menu
+    </select>
+
+
+</mapper>
