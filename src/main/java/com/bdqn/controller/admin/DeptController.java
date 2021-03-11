@@ -86,4 +86,43 @@ public class DeptController {
         //将map集合以JSON格式返回
         return JSON.toJSONString(map);
     }
+
+    /**
+     * 检查该部门下是否存在员工信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/checkDeptHasEmployee")
+    public String checkDeptHasEmployee(Integer id){
+        Map<String,Object> map = new HashMap<String,Object>();
+        //调用根据部门编号查询员工数量的方法
+        if(employeeService.getEmployeeCountByDeptId(id)>0){
+            map.put(SystemConstant.EXIST,true);//存在
+            map.put(SystemConstant.MESSAGE,"该部门存在员工信息，无法删除");
+        }else{
+            map.put(SystemConstant.EXIST,false);//不存在
+        }
+        //将map集合以JSON格式返回
+        return JSON.toJSONString(map);
+    }
+    /**
+     * 删除部门
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteById")
+    public String deleteById(Integer id){
+        Map<String,Object> map = new HashMap<String,Object>();
+        //调用删除部门的方法
+        if(deptService.deleteById(id)>0){
+            map.put(SystemConstant.SUCCESS,true);//存在
+            map.put(SystemConstant.MESSAGE,"删除成功");
+        }else{
+            map.put(SystemConstant.SUCCESS,false);//不存在
+            map.put(SystemConstant.MESSAGE,"删除失败");
+        }
+        //将map集合以JSON格式返回
+        return JSON.toJSONString(map);
+    }
+
 }

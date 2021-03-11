@@ -25,4 +25,10 @@ public interface DeptService {
      */
     int updateDept(Dept dept);
 
+    /**
+     * 删除部门
+     * @param id
+     * @return
+     */
+    int deleteById(Integer id);
 }

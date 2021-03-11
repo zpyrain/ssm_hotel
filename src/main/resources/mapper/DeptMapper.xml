@@ -29,4 +29,7 @@
         </set>
         where id =#{id}
     </update>
+    <delete id="deleteById">
+        delete from sys_dept where id = #{id}
+    </delete>
 </mapper>

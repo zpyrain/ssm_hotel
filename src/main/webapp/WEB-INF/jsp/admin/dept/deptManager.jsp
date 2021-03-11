@@ -109,6 +109,16 @@
                 {field: '操作', minWidth: 150, toolbar:'#currentTableBar', align:'center'},
             ]],
             page: true,
+            done: function (res, curr, count) {
+                //判断当前页码是否是大于1并且当前页的数据量为0
+                if (curr > 1 && res.data.length == 0) {
+                    var pageValue = curr - 1;
+                    //刷新数据表格的数据
+                    tableIns.reload({
+                        page: {curr: pageValue}
+                    });
+                }
+            }
         });
 
         // 监听搜索操作
@@ -205,13 +215,28 @@
          * @param data 当前行数据
          */
         function deleById(data){
-            $.get("admin/dept/checkDeptHasEmployee",{"id":data.id},function (result){
+            $.get("/admin/dept/checkDeptHasEmployee",{"id":data.id},function (result){
                     if(result.exist){
                         //提示用户无法删除
+                        layer.msg(result.message);
                     }else{
                         //提示用户是否删除该部门
+                        //提示用户是否删除该部门
+                        layer.confirm("确定要删除[<font color='red'>"+data.deptName+"</font>]吗", {icon: 3, title:'提示'}, function(index){
+                            //发送ajax请求进行删除
+                            $.post("/admin/dept/deleteById",{"id":data.id},function(result){
+                                if(result.success){
+                                    //刷新数据表格
+                                    tableIns.reload();
+                                }
+                                //提示
+                                layer.msg(result.message);
+                            },"json");
+
+                            layer.close(index);
+                        });
                     }
-            })
+            },"json");
         }
 
     });

@@ -10,4 +10,11 @@ public interface EmployeeService {
      * @return
      */
     Employee login(String loginName,String loginPwd);
+    /**
+     * 根据部门编号查询该部门下的员工数量
+     * @param deptId
+     * @return
+     */
+    int getEmployeeCountByDeptId(Integer deptId);
+
 }

@@ -27,4 +27,11 @@ public interface DeptMapper {
      * @return
      */
     int updateDept(Dept dept);
+
+    /**
+     * 删除部门
+     * @param id
+     * @return
+     */
+    int deleteById(Integer id);
 }

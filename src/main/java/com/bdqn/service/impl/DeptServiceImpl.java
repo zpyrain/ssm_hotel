@@ -50,4 +50,9 @@ public class DeptServiceImpl implements DeptService {
     public int updateDept(Dept dept) {
         return deptMapper.updateDept(dept);
     }
+
+    @Override
+    public int deleteById(Integer id) {
+        return deptMapper.deleteById(id);
+    }
 }
