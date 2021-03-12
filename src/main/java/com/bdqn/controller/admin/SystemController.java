@@ -51,5 +51,13 @@ public class SystemController {
     public String toDeptManager(){
         return "admin/dept/deptManager";
     }
+    /**
+     * 去到角色管理页面
+     * @return
+     */
+    @RequestMapping("/toRoleManager")
+    public String toRoleManager(){
+        return "admin/role/roleManager";
+    }
 
 }

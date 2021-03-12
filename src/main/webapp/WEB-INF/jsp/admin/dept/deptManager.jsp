@@ -109,6 +109,7 @@
                 {field: '操作', minWidth: 150, toolbar:'#currentTableBar', align:'center'},
             ]],
             page: true,
+            //加入此段代码，当最后一页的数据被删完后，自动返回上一页
             done: function (res, curr, count) {
                 //判断当前页码是否是大于1并且当前页的数据量为0
                 if (curr > 1 && res.data.length == 0) {
