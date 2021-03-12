@@ -5,6 +5,13 @@
     <select id="findMenuList" resultType="com.bdqn.entity.Menu">
         select * from sys_menu
     </select>
-
-
+    <select id="findMenuIdListByRoleId" resultType="int">
+        select mid from sys_role_menu where rid =#{roleId}
+    </select>
+    <select id="findMenuByMenuId" resultType="com.bdqn.entity.Menu">
+        select * from sys_menu where id in
+        <foreach collection="list" item="menuIds" open="(" separator="," close=")">
+            #{menuIds}
+        </foreach>
+    </select>
 </mapper>

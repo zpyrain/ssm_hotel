@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/layui/lib/layui-v2.5.5/css/layui.css"
           media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/layui/css/public.css" media="all">
+<%--    添加layui-dtree样式--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/layui_ext/dtree/dtree.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/layui_ext/dtree/font/dtreefont.css">
 </head>
 <body>
 <div class="layuimini-container">
@@ -96,10 +99,13 @@
 </div>
 <script src="${pageContext.request.contextPath}/statics/layui/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'table', 'laydate', 'jquery','layer'], function () {
+    layui.extend({
+        dtree:"${pageContext.request.contextPath}/statics/layui_ext/dtree/dtree",//dtree脚本文件路径
+    }).use(['form', 'table', 'laydate', 'jquery','layer','dtree'], function () {
         var $ = layui.jquery,
             form = layui.form,
             laydate = layui.laydate,
+            dtree = layui.dtree,
             layer = layui.layer,
             table = layui.table;
 
@@ -157,6 +163,10 @@
                 case "delete"://删除按钮
                     deleById(obj.data);
                     break;
+                case "grantMenu"://分配菜单按钮
+                    openGrantMenuWindow(obj.data);
+                    break;
+
             }
         });
         var url;//提交地址
@@ -244,7 +254,31 @@
                 }
             },"json");
         }
-
+        /**
+         * 打开分配菜单窗口
+         * @param data 当前行数据
+         */
+        function openGrantMenuWindow(data) {
+            mainIndex = layer.open({
+                type: 1,//打开类型
+                area: ["400px", "550px"],//窗口宽高
+                title: "分配[<font color='red'>"+data.roleName+"</font>]的菜单",//窗口标题
+                content: $("#selectRoleMenuDiv"),//引用的内容窗口
+                success: function () {
+                    //渲染dtree组件
+                    // 初始化树
+                  dtree.render({
+                        elem: "#roleTree",//绑定ul标签的ID属性值
+                        url: "/admin/role/initMenuTree?roleId="+data.id, // 请求地址
+                        dataStyle: "layuiStyle",  //使用layui风格的数据格式
+                        dataFormat: "list",  //配置data的风格为list
+                        response:{message:"msg",statusCode:0}, //修改response中返回数据的定义
+                        checkbar:true,
+                        checkbarType: "all"//默认就是all，其他的值是：no-all p-casc self omly
+                    });
+                }
+            });
+        }
     });
 </script>
 
