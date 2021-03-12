@@ -2,6 +2,7 @@ package com.bdqn.controller.admin;
 
 import com.alibaba.fastjson.JSON;
 import com.bdqn.entity.Role;
+import com.bdqn.service.EmployeeService;
 import com.bdqn.service.RoleService;
 import com.bdqn.utils.DataGridViewResult;
 import com.bdqn.utils.SystemConstant;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class RoleController {
     @Resource
     private RoleService roleService;
+    @Resource
+    private EmployeeService employeeService;
 
     /**
      * 查询角色列表
@@ -73,6 +76,38 @@ public class RoleController {
         }else{
             map.put(SystemConstant.SUCCESS,false);//失败
             map.put(SystemConstant.MESSAGE,"修改失败");
+        }
+        //将map集合以JSON格式返回
+        return JSON.toJSONString(map);
+    }
+    /**
+     * 删除部门
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteById")
+    public String deleteById(Integer id){
+        Map<String,Object> map = new HashMap<String,Object>();
+        //调用删除角色的方法
+        if(roleService.deleteById(id)>0){
+            map.put(SystemConstant.SUCCESS,true);//存在
+            map.put(SystemConstant.MESSAGE,"删除成功");
+        }else{
+            map.put(SystemConstant.SUCCESS,false);//不存在
+            map.put(SystemConstant.MESSAGE,"删除失败");
+        }
+        //将map集合以JSON格式返回
+        return JSON.toJSONString(map);
+    }
+    @RequestMapping("/checkRoleHasEmployee")
+    public String checkDeptHasEmployee(Integer id){
+        Map<String,Object> map = new HashMap<String,Object>();
+        //调用根据角色编号查询员工数量的方法
+        if(employeeService.getEmployeeCountByRoleId(id)>0){
+            map.put(SystemConstant.EXIST,true);//存在
+            map.put(SystemConstant.MESSAGE,"该角色下存在员工信息，无法删除");
+        }else{
+            map.put(SystemConstant.EXIST,false);//不存在
         }
         //将map集合以JSON格式返回
         return JSON.toJSONString(map);

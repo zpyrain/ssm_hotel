@@ -16,5 +16,11 @@ public interface EmployeeService {
      * @return
      */
     int getEmployeeCountByDeptId(Integer deptId);
+    /**
+     * 根据角色编号查询该部门下的员工数量
+     * @param roleId
+     * @return
+     */
+    int getEmployeeCountByRoleId(Integer roleId);
 
 }

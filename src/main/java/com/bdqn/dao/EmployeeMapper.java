@@ -17,5 +17,13 @@ public interface EmployeeMapper {
      * @return
      */
     int getEmployeeCountByDeptId(Integer deptId);
+    /**
+     * 根据角色编号查询员工数量
+     * @param roleId
+     * @return
+     */
+    int getEmployeeCountByRoleId(Integer roleId);
+
+
 
 }

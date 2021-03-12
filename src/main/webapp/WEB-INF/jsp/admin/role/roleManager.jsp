@@ -214,6 +214,37 @@
             //禁止页面刷新
             return false;
         })
+
+        /**
+         * 删除部门
+         * @param data 当前行数据
+         */
+        function deleById(data){
+            //判断该角色下面是否存在员工
+            $.get("/admin/role/checkRoleHasEmployee",{"id":data.id},function (result){
+                if(result.exist){
+                    //提示用户无法删除
+                    layer.msg(result.message);
+                }else{
+                    //提示用户是否删除该角色
+                    //提示用户是否删除该角色
+                    layer.confirm("确定要删除[<font color='red'>"+data.roleName+"</font>]吗", {icon: 3, title:'提示'}, function(index){
+                        //发送ajax请求进行删除
+                        $.post("/admin/role/deleteById",{"id":data.id},function(result){
+                            if(result.success){
+                                //刷新数据表格
+                                tableIns.reload();
+                            }
+                            //提示
+                            layer.msg(result.message);
+                        },"json");
+
+                        layer.close(index);
+                    });
+                }
+            },"json");
+        }
+
     });
 </script>
 

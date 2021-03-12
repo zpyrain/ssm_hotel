@@ -40,4 +40,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public int getEmployeeCountByDeptId(Integer deptId) {
         return employeeMapper.getEmployeeCountByDeptId(deptId);
     }
+
+    @Override
+    public int getEmployeeCountByRoleId(Integer roleId) {
+        return employeeMapper.getEmployeeCountByRoleId(roleId);
+    }
 }

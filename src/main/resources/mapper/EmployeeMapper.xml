@@ -11,4 +11,11 @@
     <select id="getEmployeeCountByDeptId" resultType="int">
         select count(1) from sys_employee where deptId =#{deptId}
     </select>
+    <!--根据角色编号查询该部门下的员工数量-->
+    <select id="getEmployeeCountByRoleId" resultType="int">
+        select count(1) from sys_employee e
+        inner join sys_role_employee re on e.id =re.eid
+        where re.rid = #{roleId}
+    </select>
+
 </mapper>
