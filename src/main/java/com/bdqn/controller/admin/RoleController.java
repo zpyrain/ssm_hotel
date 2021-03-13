@@ -1,7 +1,6 @@
 package com.bdqn.controller.admin;
 
 import com.alibaba.fastjson.JSON;
-import com.bdqn.dao.MenuMapper;
 import com.bdqn.entity.Menu;
 import com.bdqn.entity.Role;
 import com.bdqn.service.EmployeeService;
@@ -178,4 +177,21 @@ public class RoleController {
         return new DataGridViewResult(treeNodes);
     }
 
+    /**
+     * 分配菜单
+     * @param ids
+     * @param roleId
+     * @return
+     */
+    @RequestMapping("/saveRoleMenu")
+    public String saveRoleMenu(String ids,Integer roleId){
+        Map<String,Object> map = new HashMap<String,Object>();
+        //调用保存角色菜单关系的方法
+        if(roleService.saveRoleMenu(ids,roleId)>0){
+            map.put("message","菜单分配成功");
+        }else{
+            map.put("message","菜单分配失败");
+        }
+        return JSON.toJSONString(map);
+    }
 }

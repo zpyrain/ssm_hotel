@@ -33,4 +33,11 @@ public interface RoleService {
      */
     int deleteById(Integer id);
 
+    /**
+     * 保存角色菜单关系
+     * @param ids
+     * @param roleId
+     * @return
+     */
+    int saveRoleMenu(String ids, Integer roleId);
 }

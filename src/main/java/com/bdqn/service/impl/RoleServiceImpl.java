@@ -34,4 +34,23 @@ public class RoleServiceImpl implements RoleService {
     public int deleteById(Integer id) {
         return roleMapper.deleteById(id);
     }
+
+    @Override
+    public int saveRoleMenu(String ids, Integer roleId) {
+        try {
+            //删除原有的菜单关系
+            roleMapper.deleteRoleMenu(roleId);//根据角色ID删除
+            //将ids拆分成数组
+            String [] idsStr =ids.split(",");
+            //循环数组
+            for(int i=0;i<idsStr.length;i++){
+                //调用保存菜单角色关系的方法
+                roleMapper.addRoleMenu(roleId,idsStr[i]);
+            }
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

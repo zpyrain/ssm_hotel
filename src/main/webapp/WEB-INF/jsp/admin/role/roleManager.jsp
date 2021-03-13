@@ -261,20 +261,45 @@
         function openGrantMenuWindow(data) {
             mainIndex = layer.open({
                 type: 1,//打开类型
-                area: ["400px", "550px"],//窗口宽高
-                title: "分配[<font color='red'>"+data.roleName+"</font>]的菜单",//窗口标题
+                area:["400px","550px"],
+                title:"分配[<font color='red'>"+data.roleName+"</font>]的菜单",
                 content: $("#selectRoleMenuDiv"),//引用的内容窗口
+                btn: ['确定', '取消']
+                ,yes: function(index, layero){
+                    //获取复选框选中的值
+                    var params = dtree.getCheckbarNodesParam("roleTree");
+                    //判断是否有选中复选框
+                    if(params.length>0){
+                        //定义数组，保存选中的值
+                        var idArr = [];
+                        //循环获取选中的值
+                        for (var i = 0; i < params.length; i++) {
+                            idArr.push(params[i].nodeId);//nodeId是选中的树节点的值，固定不能修改
+                        }
+                        //将数组转换成字符串
+                        var ids = idArr.join(",");//选中的菜单ID值
+                        //发送ajax请求，保存选中的菜单ID
+                        $.post("/admin/role/saveRoleMenu",{"ids":ids,"roleId":data.id},function(result){
+                            layer.msg(result.message);
+                        },"json");
+                    }else{
+                        layer.msg("请选择要分配的菜单");
+                    }
+
+                }
+                ,btn2: function(index, layero){
+
+                },
                 success: function () {
                     //渲染dtree组件
-                    // 初始化树
-                  dtree.render({
+                    dtree.render({
                         elem: "#roleTree",//绑定ul标签的ID属性值
-                        url: "/admin/role/initMenuTree?roleId="+data.id, // 请求地址
+                        url: "/admin/role/initMenuTree?roleId="+data.id, //请求地址
                         dataStyle: "layuiStyle",  //使用layui风格的数据格式
                         dataFormat: "list",  //配置data的风格为list
-                        response:{message:"msg",statusCode:0}, //修改response中返回数据的定义
-                        checkbar:true,
-                        checkbarType: "all"//默认就是all，其他的值是：no-all p-casc self omly
+                        response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+                        checkbar: true,
+                        checkbarType: "all" // 默认就是all，其他的值为： no-all  p-casc   self  only
                     });
                 }
             });
