@@ -1,6 +1,11 @@
 package com.bdqn.dao;
 
 import com.bdqn.entity.Employee;
+import com.bdqn.vo.EmployeeVo;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface EmployeeMapper {
 
@@ -24,6 +29,43 @@ public interface EmployeeMapper {
      */
     int getEmployeeCountByRoleId(Integer roleId);
 
+    /**
+     * 查询员工的列表
+     * @param employeeVo
+     * @return
+     */
+    List<Employee> findEmployeeList(EmployeeVo employeeVo);
 
+    /**
+     * 添加员工
+     * @param employee
+     * @return
+     */
+    int addEmployee(Employee employee);
+    /**
+     * 修改员工
+     * @param employee
+     * @return
+     */
+    int updateEmployee(Employee employee);
 
+    /**
+     * 删除员工
+     * @param id
+     * @return
+     */
+    int deleteById(Integer id);
+    /**
+     * 删除员工角色关系数据
+     * @param id
+     */
+    void deleteEmployeeAndRole(Integer id);
+
+    /**
+     * 保存员工角色关系数据
+     * @param roleId
+     * @param empId
+     */
+    @Insert("insert into sys_role_employee(eid,rid) values(#{eid},#{rid})")
+    void addEmployeeRole(@Param("rid") String roleId, @Param("eid") Integer empId);
 }

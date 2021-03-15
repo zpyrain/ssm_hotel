@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -193,5 +194,35 @@ public class RoleController {
             map.put("message","菜单分配失败");
         }
         return JSON.toJSONString(map);
+    }
+
+    /**
+     * 调用根据员工ID查询该员工拥有的角色列表
+     * @param id
+     * @return
+     */
+    @RequestMapping("/initRoleListByEmpId")
+    public DataGridViewResult initRoleListByEmpId(int id){
+        //调用查询所有角色列表的方法
+        List<Map<String, Object>> roleList = roleService.findRoleListByMap();
+        //调用根据员工ID查询该员工拥有的角色列表的方法
+        List<Integer> roleIds=roleService.findEmployeeRoleByEmployeeId(id);
+        //循环比较两个集合中的角色ID值是否相等，相等则选中该角色
+        for(Map<String ,Object> map:roleList){
+            //定义变量，表示是否选中
+            boolean flag =false;//不选中
+            //获得每一个角色ID
+            Integer rid = (Integer) map.get("id");//id是主键，以主键作为map集合中的key
+            //内层循环遍历该员工拥有的角色列表
+            for (Integer roleId:roleIds){
+                if(rid == roleId){
+                    flag = true;//选中该角色
+                    break;
+                }
+            }
+            //将状态保存在map集合中
+            map.put("LAY_CHECKED",flag);//key必须是LAY_CHECKED
+        }
+        return new DataGridViewResult(Long.valueOf(roleList.size()),roleList);
     }
 }

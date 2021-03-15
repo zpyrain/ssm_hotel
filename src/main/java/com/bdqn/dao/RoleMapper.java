@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RoleMapper {
     /**
@@ -51,4 +52,17 @@ public interface RoleMapper {
      */
     @Delete("delete from sys_role_menu where rid =#{roleId}")
     void deleteRoleMenu(Integer roleId);
+
+    /**
+     * 查询所有角色列表
+     * @return
+     */
+    List<Map<String,Object>> findRoleListByMap();
+
+    /**
+     *根据员工ID查询该员工拥有的角色列表
+     * @param id
+     * @return
+     */
+    List<Integer> findEmployeeRoleByEmployeeId(Integer id);
 }

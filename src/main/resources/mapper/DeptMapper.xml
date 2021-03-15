@@ -32,4 +32,7 @@
     <delete id="deleteById">
         delete from sys_dept where id = #{id}
     </delete>
+    <select id="findDeptList" resultType="com.bdqn.entity.Dept">
+        select * from sys_dept
+    </select>
 </mapper>

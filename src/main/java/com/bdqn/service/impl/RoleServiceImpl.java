@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -52,5 +53,15 @@ public class RoleServiceImpl implements RoleService {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public List<Map<String, Object>> findRoleListByMap() {
+        return roleMapper.findRoleListByMap();
+    }
+
+    @Override
+    public List<Integer> findEmployeeRoleByEmployeeId(Integer employeeId) {
+        return roleMapper.findEmployeeRoleByEmployeeId(employeeId);
     }
 }

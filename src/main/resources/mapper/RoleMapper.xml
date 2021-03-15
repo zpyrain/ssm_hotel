@@ -27,4 +27,10 @@
     <delete id="deleteById">
         delete from sys_role where id = #{id}
     </delete>
+    <select id="findRoleListByMap" resultType="map">
+        select * from sys_role
+    </select>
+    <select id="findEmployeeRoleByEmployeeId" resultType="int">
+        select rid from sys_role_employee where eid =#{employeeId}
+    </select>
 </mapper>

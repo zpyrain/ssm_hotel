@@ -7,6 +7,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="${pageContext.request.contextPath}/statics/layui/images/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/layui/lib/layui-v2.5.5/css/layui.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/statics/layui/css/public.css" media="all">
 </head>
@@ -18,12 +19,12 @@
         <fieldset class="table-search-fieldset">
             <legend>搜索信息</legend>
             <div style="margin: 10px 10px 10px 10px">
-                <form class="layui-form layui-form-pane" action="">
+                <form class="layui-form layui-form-pane" >
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <label class="layui-form-label">员工姓名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="loginname" autocomplete="off" class="layui-input">
+                                <input type="text" name="loginName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -45,7 +46,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">所属部门</label>
                             <div class="layui-input-inline">
-                                <select name="deptid" autocomplete="off" id="s_deptId" class="layui-input">
+                                <select name="deptId" autocomplete="off" id="s_deptId" class="layui-input">
                                     <option value="">请选择部门</option>
                                 </select>
                             </div>
@@ -53,13 +54,13 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">开始日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="startTime" id="startTime" autocomplete="off" class="layui-input" readonly>
+                                <input type="text" name="startDate" id="startTime" autocomplete="off" class="layui-input" readonly>
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">结束日期</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="endTime" id="endTime" autocomplete="off" class="layui-input" readonly>
+                                <input type="text" name="endDate" id="endTime" autocomplete="off" class="layui-input" readonly>
                             </div>
                         </div>
                     </div>
@@ -101,7 +102,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">登陆名称</label>
                         <div class="layui-input-block">
-                            <input type="text" name="loginname" id="loginname" lay-verify="required"  autocomplete="off" placeholder="请输入登陆名称" class="layui-input">
+                            <input type="text" name="loginName" id="loginname" lay-verify="required"  autocomplete="off" placeholder="请输入登陆名称" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -115,13 +116,13 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">入职日期</label>
                         <div class="layui-input-block">
-                            <input type="text" name="hiredate" id="hiredate" readonly lay-verify="required" autocomplete="off" placeholder="请选择入职日期" class="layui-input">
+                            <input type="text" name="hireDate" id="hiredate" readonly lay-verify="required" autocomplete="off" placeholder="请选择入职日期" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">所属部门</label>
                         <div class="layui-input-block">
-                            <select name="deptid" id="deptid" class="layui-input">
+                            <select name="deptId" id="deptid" class="layui-input">
                                 <option value="">请选择部门</option>
                             </select>
                         </div>
@@ -178,23 +179,26 @@
             type: 'datetime'
         });
         laydate.render({
-            elem: '#hiredate' //指定元素
+            elem: '#hiredate', //指定元素
+            type: 'datetime'
         });
 
         //渲染表格组件
         var tableIns = table.render({
             elem: '#currentTableId',
-            url: 'statics/layui/api/table.json',
+            url: '${pageContext.request.contextPath}/admin/employee/list',
             toolbar: '#toolbarDemo',
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'id', width: 100, title: '员工编号', align: "center"},
-                {field: 'loginname', width: 120, title: '登录名', align: "center"},
+                {field: 'loginName', width: 120, title: '登录名', align: "center"},
                 {field: 'name', width: 120, title: '真实姓名', align: "center"},
-                {field: 'sex', width: 80, title: '性别', align: "center"},
+                {field: 'sex', width: 80, title: '性别', align: "center",templet:function(s){
+                        return s.sex ==1? "男":"女";
+                    }},
                 {field: 'deptName', width: 120, title: '所属部门', align: "center"},
-                {field: 'hiredate', width: 180, title: '入职日期', align: "center"},
-                {field: 'createdate', width: 180, title: '创建时间', align: "center"},
+                {field: 'hireDate', width: 180, title: '入职日期', align: "center"},
+                {field: 'createDate', width: 180, title: '创建时间', align: "center"},
                 {title: '操作', minWidth: 120, toolbar: '#currentTableBar', align: "center"}
             ]],
             page: true,
@@ -209,8 +213,213 @@
                 }
             }
         });
-    });
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            tableIns.reload({
+                where: data.field,
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        });
+        //发送ajax请求查询部门下拉列表
+        $.get("/admin/dept/deptList",function (result){
+            var html = "";
+            //循环遍历
+            for(var i=0;i<result.length;i++){
+                html +="<option value='"+result[i].id+"'>"+result[i].deptName+"</option>"
+            }
+            //将html追加到下拉列表中
+            $("[name='deptId']").append(html);
+            //重新渲染下拉列表组键
+            form.render("select");
+        },"json");
+        //监听头部工具栏事件
+        table.on("toolbar(currentTableFilter)",function (obj) {
+            switch (obj.event) {
+                case "add"://添加按钮
+                    openAddWindow();//打开添加窗口
+                    break;
+            }
+        });
+        //监听行工具栏
+        table.on("tool(currentTableFilter)",function (obj) {
+            console.log(obj);
+            switch (obj.event) {
+                case "edit"://编辑按钮
+                    openUpDateWindow(obj.data);//打开修改窗口
+                    break;
+                case "delete"://删除按钮
+                    deleById(obj.data);
+                    break;
+                case "resetPwd"://重置密码按钮
+                    resetPwd(obj.data);
+                    break;
+                case "grantRole"://分配角色按钮
+                    grantRole(obj.data);
+                    break;
+            }
+        });
+        var url;//提交地址
+        var mainIndex;//打开窗口的索引
 
+        /**
+         * 打开添加窗口
+         */
+        function openAddWindow() {
+            mainIndex = layer.open({
+                type: 1,//打开类型
+                title: "添加员工",//窗口标题
+                area: ["800px", "400px"],//窗口宽高
+                content: $("#addOrUpdateWindow"),//引用的内容窗口
+                success: function () {
+                    //清空表单数据
+                    $("#dataFrm")[0].reset();
+                    //添加的提交请求
+                    url = "/admin/employee/addEmployee";
+                }
+            });
+        }
+
+        /**
+         * 打开修改窗口
+         * @param data
+         */
+        function openUpDateWindow(data) {
+            mainIndex = layer.open({
+                type: 1,//打开类型
+                title: "修改员工",//窗口标题
+                area: ["800px", "400px"],//窗口宽高
+                content: $("#addOrUpdateWindow"),//引用的内容窗口
+                success: function () {
+                    //表单数据回显
+                    form.val("dataFrm",data);//参数1：lay-filter值 参数2：回显的数据
+                    //修改的提交请求
+                    url = "/admin/employee/updateEmployee";
+                }
+            });
+        }
+        /**
+         * 删除员工
+         * @param data 当前行数据
+         */
+        function deleById(data){
+            //提示用户是否删除该用户
+            layer.confirm("确定要删除[<font color='red'>"+data.name+"</font>]吗", {icon: 3, title:'提示'}, function(index){
+                //发送ajax请求进行删除
+                $.post("/admin/employee/deleteById",{"id":data.id},function(result){
+                    if(result.success){
+                        //刷新数据表格
+                        tableIns.reload();
+                    }
+                    //提示
+                    layer.msg(result.message);
+                },"json");
+
+                layer.close(index);
+            });
+        }
+        /**
+         * 重置密码
+         * @param data 当前行数据
+         */
+        function resetPwd(data){
+            //提示用户是否确认重置
+            layer.confirm("确定要重置[<font color='red'>"+data.name+"</font>]密码吗", {icon: 3, title:'提示'}, function(index){
+                //发送ajax请求进行重置密码
+                $.post("/admin/employee/resetPwd",{"id":data.id},function(result){
+                    if(result.success){
+                        //刷新数据表格
+                        tableIns.reload();
+                    }
+                    //提示
+                    layer.msg(result.message);
+                },"json");
+
+                layer.close(index);
+            });
+        }
+        //监听表单提交事件
+        form.on("submit(doSubmit)",function (data) {
+            $.post(url,data.field,function(result){
+                if(result.success){
+                    //刷新数据表格
+                    tableIns.reload();
+                    //关闭窗口
+                    layer.close(mainIndex);
+                }
+                //提示信息
+                layer.msg(result.message);
+            },"json");
+            //禁止页面刷新
+            return false;
+        })
+
+        /**
+         * 分配角色
+         * @param data
+         */
+        function grantRole(data){
+            mainIndex = layer.open({
+                type: 1,//打开类型
+                title: "分配[<font color='red'>"+data.name+"</font>]角色",//窗口标题
+                area: ["800px", "500px"],//窗口宽高
+                content: $("#selectUserRoleDiv"),//引用的内容窗口
+                btn: ['<i class="layui-icon layui-icon-ok"></i> 确定', '<i class="layui-icon layui-icon-close"></i>取消']
+                ,yes: function(index, layero){
+                //获取选中行
+                    var checkStatus = table.checkStatus('roleTable');
+                    //判断是否有选中行
+                    if(checkStatus.data.length>0){
+                        //定义数组，保存选中角色ID
+                        var idArr=[];
+                        //获取选中的角色ID
+                        for(var i =0;i<checkStatus.data.length;i++){
+                            idArr.push(checkStatus.data[i].id);
+                        }
+                        //将数组使用，分割开  将数组拼接成了字符串
+                        var ids =idArr.join(",");
+                        //发送请求
+                        $.post("/admin/employee/saveEmployeeRole",{"roleIds":ids,"empId":data.id},function (result){
+                                layer.msg(result.message);
+                        },"json");
+                        //关闭窗口
+                        layer.close(mainIndex);
+                    }else {
+                        layer.msg("请选择要分配的角色");
+                    }
+
+                }
+                ,btn2: function(index, layero){
+
+
+                //return false 开启该代码可禁止点击该按钮关闭
+                },
+                success: function () {
+                     //显示角色列表的表格
+                    initTableData(data)
+                }
+            });
+        }
+
+        /**
+         * 初始化角色表格数据
+         * @param data
+         */
+        function initTableData(data) {
+            table.render({
+                elem: '#roleTable',
+                url: '${pageContext.request.contextPath}/admin/role/initRoleListByEmpId?id='+data.id,
+                cols: [[
+                    {type: "checkbox", width: 50},
+                    {field: 'id', minWidth: 100, title: '角色编号', align: "center"},
+                    {field: 'rolename', minWidth: 120, title: '角色名称', align: "center"},
+                    {field: 'roledesc', minWidth: 120, title: '角色描述', align: "center"},
+                ]],
+            })
+        }
+    });
 </script>
 
 </body>

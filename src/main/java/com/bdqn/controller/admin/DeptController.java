@@ -125,4 +125,13 @@ public class DeptController {
         return JSON.toJSONString(map);
     }
 
+    /**
+     * 查询所有部门
+     * @return
+     */
+    @RequestMapping("/deptList")
+    public String deptList(){
+        //调用查询所有部门信息的方法并返回页面
+        return JSON.toJSONString(deptService.findDeptList());
+    }
 }

@@ -226,7 +226,7 @@
         })
 
         /**
-         * 删除部门
+         * 删除角色
          * @param data 当前行数据
          */
         function deleById(data){

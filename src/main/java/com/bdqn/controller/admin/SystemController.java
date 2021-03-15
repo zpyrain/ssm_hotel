@@ -67,5 +67,12 @@ public class SystemController {
     public String toEmployeeManager(){
         return "admin/employee/employeeManager";
     }
-
+    /**
+     * 去到菜单管理页面
+     * @return
+     */
+    @RequestMapping("/toMenuManager")
+    public String toMenuManager(){
+        return "admin/menu/toMenuManager";
+    }
 }

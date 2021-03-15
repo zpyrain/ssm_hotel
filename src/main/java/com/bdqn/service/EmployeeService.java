@@ -1,6 +1,9 @@
 package com.bdqn.service;
 
 import com.bdqn.entity.Employee;
+import com.bdqn.vo.EmployeeVo;
+
+import java.util.List;
 
 public interface EmployeeService {
     /**
@@ -22,5 +25,43 @@ public interface EmployeeService {
      * @return
      */
     int getEmployeeCountByRoleId(Integer roleId);
+    /**
+     * 查询员工的列表
+     * @param employeeVo
+     * @return
+     */
+    List<Employee> findEmployeeList(EmployeeVo employeeVo);
+    /**
+     * 添加员工
+     * @param employee
+     * @return
+     */
+    int addEmployee(Employee employee);
+    /**
+     * 修改员工
+     * @param employee
+     * @return
+     */
+    int updateEmployee(Employee employee);
+    /**
+     * 删除员工
+     * @param id
+     * @return
+     */
+    int deleteById(Integer id);
 
+    /**
+     * 重置密码
+     * @param id
+     * @return
+     */
+    int resetPwd(int id);
+
+    /**
+     * 保存员工和角色的关系
+     * @param roleIds
+     * @param empId
+     * @return
+     */
+    boolean saveEmployeeRole(String roleIds, Integer empId);
 }

@@ -34,4 +34,10 @@ public interface DeptMapper {
      * @return
      */
     int deleteById(Integer id);
+
+    /**
+     * 查询所有部门
+     * @return
+     */
+    List<Dept> findDeptList();
 }
