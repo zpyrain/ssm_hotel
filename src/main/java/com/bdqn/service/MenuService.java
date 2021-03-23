@@ -1,6 +1,7 @@
 package com.bdqn.service;
 
 import com.bdqn.entity.Menu;
+import com.bdqn.vo.MenuVo;
 
 import java.util.List;
 
@@ -23,4 +24,41 @@ public interface MenuService {
      * @return
      */
     List<Menu> findMenuByMenuId(List<Integer> currentRoleMenuIds);
+    /**
+     * 查询菜单列表
+     * @param menuVo
+     * @return
+     */
+    List<Menu> findMenuListByPage(MenuVo menuVo);
+    /**
+     * 添加菜单
+     * @param menu
+     * @return
+     */
+    int addMenu(Menu menu);
+    /**
+     * 修改菜单
+     * @param menu
+     * @return
+     */
+    int updateMenu(Menu menu);
+
+    /**
+     * 删除菜单
+     * @param id
+     * @return
+     */
+    int deleteById(int id);
+    /**
+     * 根绝菜单ID查询该菜单是否有子菜单
+     * @param id
+     * @return
+     */
+    int getMenuCountByMenuId(Integer id);
+    /**
+     * 根据当前登陆员工的角色查询菜单列表
+     * @param employeeId
+     * @return
+     */
+    List<Menu> findMenuListByEmployeeId(Integer employeeId);
 }

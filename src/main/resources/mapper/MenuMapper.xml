@@ -14,4 +14,51 @@
             #{menuIds}
         </foreach>
     </select>
+    <select id="findMenuListByPage" resultType="com.bdqn.entity.Menu">
+        select * from sys_menu
+        <where>
+            <if test="id!=null">
+                and id = #{id} or pid=#{id}
+            </if>
+        </where>
+        order by id
+    </select>
+    <insert id="addMenu">
+        insert into sys_menu(pid,title,href,spread,target,icon)
+        values (#{pid},#{title},#{href},#{spread},#{target},#{icon})
+    </insert>
+    <update id="updateMenu">
+        update sys_menu
+        <set>
+            <if test="pid!=null">
+                pid=#{pid},
+            </if>
+            <if test="spread!=null">
+                spread=#{spread},
+            </if>
+            <if test="title!=null and title!=''">
+                title=#{title},
+            </if>
+            <if test="target!=null and target!=''">
+                target=#{target},
+            </if>
+            <if test="icon!=null and icon!=''">
+                icon=#{icon},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete from sys_menu where id =#{id}
+    </delete>
+    <select id="getMenuCountByMenuId" resultType="int">
+        select count(1) from sys_menu where pid=#{pid}
+    </select>
+
+    <select id="findMenuListByEmployeeId" resultType="com.bdqn.entity.Menu">
+        select distinct t1.* from sys_menu t1
+        inner join sys_role_menu t2 on t2.`mid` = t1.`id`
+        inner join sys_role_employee t3 on t3.`rid` = t2.`rid`
+        where t3.`eid` = #{employeeId}
+    </select>
 </mapper>

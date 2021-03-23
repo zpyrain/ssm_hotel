@@ -73,6 +73,6 @@ public class SystemController {
      */
     @RequestMapping("/toMenuManager")
     public String toMenuManager(){
-        return "admin/menu/toMenuManager";
+        return "admin/menu/menuManager";
     }
 }
