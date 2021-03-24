@@ -36,6 +36,9 @@
             <if test="spread!=null">
                 spread=#{spread},
             </if>
+            <if test="href!=null and href!=''">
+                href=#{href},
+            </if>
             <if test="title!=null and title!=''">
                 title=#{title},
             </if>

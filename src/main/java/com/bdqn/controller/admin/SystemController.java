@@ -75,4 +75,21 @@ public class SystemController {
     public String toMenuManager(){
         return "admin/menu/menuManager";
     }
+
+    /**
+     * 去到楼层管理页面
+     * @return
+     */
+    @RequestMapping("/toFloorManager")
+    public String toFloorManager(){
+        return "admin/floor/floorManager";
+    }
+    /**
+     * 去到房型管理页面
+     * @return
+     */
+    @RequestMapping("/toFloorManager")
+    public String toRoomTypeManager(){
+        return "admin/roomType/roomTypeManager";
+    }
 }
