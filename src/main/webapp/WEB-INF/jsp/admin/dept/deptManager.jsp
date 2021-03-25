@@ -174,7 +174,6 @@
                 }
             });
         }
-
         /**
          * 打开修改窗口
          * @param data 当前行数据
@@ -200,16 +199,18 @@
                 //提示成功信息
                 if(result.success){
 
-                //刷新数据表格
-                tableIns.reload();
-                //关闭窗口
-                layer.close(mainIndex);
+                    //刷新数据表格
+                    tableIns.reload();
+                    //关闭窗口
+                    layer.close(mainIndex);
                 }
                 layer.msg(result.message);
             },"json");
             //禁止页面刷新
             return false;
         })
+
+
 
         /**
          * 删除部门

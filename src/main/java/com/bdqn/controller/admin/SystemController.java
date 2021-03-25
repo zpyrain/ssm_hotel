@@ -88,7 +88,7 @@ public class SystemController {
      * 去到房型管理页面
      * @return
      */
-    @RequestMapping("/toFloorManager")
+    @RequestMapping("/toRoomTypeManager")
     public String toRoomTypeManager(){
         return "admin/roomType/roomTypeManager";
     }
