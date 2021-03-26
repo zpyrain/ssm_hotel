@@ -27,12 +27,41 @@
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">房型名称</label>
+                            <label class="layui-form-label">房间编号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="typename" autocomplete="off" class="layui-input">
+                                <input type="text" name="roomnum" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
+                            <label class="layui-form-label">房间类型</label>
+                            <div class="layui-input-inline">
+                                <select name="roomtypeid" id="s_roomTypeId" autocomplete="off" class="layui-input">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">所属楼层</label>
+                            <div class="layui-input-inline">
+                                <select name="floorid" id="s_floorId" autocomplete="off" class="layui-input">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">房间状态</label>
+                            <div class="layui-input-inline">
+                                <select name="status" id="s_status" autocomplete="off" class="layui-input">
+                                    <option value="">全部</option>
+                                    <option value="1">已预定</option>
+                                    <option value="2">已入住</option>
+                                    <option value="3">可预订</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block" style="text-align: center">
                             <button type="submit" class="layui-btn" lay-submit lay-filter="data-search-btn"><i
                                     class="layui-icon layui-icon-search"></i>搜索
                             </button>
@@ -74,23 +103,21 @@
                     <div class="layui-row layui-col-space10">
                         <div class="layui-col-md9 layui-col-xs7">
                             <div class="layui-form-item magt3" style="margin-top: 8px;">
-                                <label class="layui-form-label">房型名称</label>
+                                <label class="layui-form-label">房间编号</label>
                                 <div class="layui-input-block">
-                                    <input type="text" class="layui-input" name="typename" lay-verify="required"  placeholder="请输入房型名称">
+                                    <input type="text" class="layui-input" name="roomnum" lay-verify="required"  placeholder="请输入房间编号">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">房型状态</label>
+                                <label class="layui-form-label">房间类型</label>
                                 <div class="layui-input-block">
-                                    <select name="status" id="status" lay-verify="required">
-                                        <option value="">请选择房型状态</option>
-                                        <option value="1">可预订可入住</option>
-                                        <option value="2">房型已满</option>
+                                    <select name="roomtypeid" id="roomtypeid" lay-verify="required">
+                                        <option value="">请选择房型</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">房型备注</label>
+                                <label class="layui-form-label">房间备注</label>
                                 <div class="layui-input-block">
                                     <textarea class="layui-textarea" name="remark" id="remark"></textarea>
                                 </div>
@@ -98,38 +125,43 @@
                         </div>
                         <div class="layui-col-md3 layui-col-xs5">
                             <div class="layui-upload-list thumbBox mag0 magt3">
-                                <input type="hidden" name="photo" id="photo" value="images/defaultimg.jpg">
-                                <img class="layui-upload-img thumbImg" src="/hotel/show/images/defaultimg.jpg">
+                                <input type="hidden" name="photo" id="photo" value="/statics/images/defaultimg.jpg">
+                                <img class="layui-upload-img thumbImg" src="/statics/images/defaultimg.jpg">
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item magb0">
                         <div class="layui-inline">
-                            <label class="layui-form-label">参考价格</label>
+                            <label class="layui-form-label">所属楼层</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="price" lay-verify="required|number"
-                                       placeholder="请输入参考价格">
+                                <select name="floorid" id="floorid" lay-verify="required">
+                                    <option value="">请选择楼层</option>
+                                </select>
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">可住人数</label>
+                            <label class="layui-form-label">房间状态</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="livenum" lay-verify="required|number"
-                                       placeholder="请输入可住人数">
+                                <select name="status" id="status" lay-verify="required">
+                                    <option value="">请选择房间状态</option>
+                                    <option value="1">已预定</option>
+                                    <option value="2">已入住</option>
+                                    <option value="3">可预订</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">床位数</label>
-                            <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="bednum" lay-verify="required|number" placeholder="请输入床位数">
-                            </div>
+
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">房间要求</label>
+                        <div class="layui-input-block" >
+                            <textarea id="roomrequirement" name="roomrequirement" class="layui-textarea"></textarea>
                         </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">房间数</label>
-                            <div class="layui-input-inline">
-                                <input type="text" class="layui-input" name="roomnum" lay-verify="required|number"
-                                       placeholder="请输入房间数">
-                            </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">房间详情</label>
+                        <div class="layui-input-block" >
+                            <textarea id="roomdesc" name="roomdesc" style="display: none;"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -150,33 +182,26 @@
 </div>
 <script src="${pageContext.request.contextPath}/statics/layui/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'table', 'laydate', 'jquery', 'layer','upload'], function () {
+    layui.use(['form', 'table', 'laydate', 'jquery', 'layer','upload','layedit'], function () {
         var $ = layui.jquery,
             form = layui.form,
             laydate = layui.laydate,
             upload = layui.upload,
+            layedit = layui.layedit,
             layer = layui.layer,
             table = layui.table;
 
         //渲染表格组件
         var tableIns = table.render({
             elem: '#currentTableId',
-            url: '${pageContext.request.contextPath}/admin/roomType/list',
+            url: '${pageContext.request.contextPath}/admin/room/list',
             toolbar: '#toolbarDemo',
             cols: [[
                 {field: 'id', width: 60, title: '编号', align: "center"},
-                {field: 'typename', minWidth: 150, title: '名称', align: "center"},
-                {field: 'price', minWidth: 100, title: '价格', align: "center"},
-                {field: 'livenum', minWidth: 100, title: '可住人数', align: "center"},
-                {field: 'bednum', minWidth: 100, title: '床位数', align: "center"},
-                {field: 'roomnum', minWidth: 100, title: '房间数', align: "center"},
-                {field: 'reservednum', minWidth: 100, title: '可用房间数', align: "center"},
-                {field: 'avilablenum', minWidth: 100, title: '已预订数', align: "center"},
-                {field: 'livednum', minWidth: 100, title: '已入住数', align: "center"},
-                {field: 'status', minWidth: 100, title: '状态', align: "center",templet:function (d) {
-                        return d.status == 1 ? "可预订" : "<font color='red'>房型已满</font>"
-                    }},
-                {field: 'remark', minWidth: 100, title: '备注', align: "center"},
+                {field: 'roomnum', minWidth: 120, title: '房间编号', align: "center"},
+                {field: 'typeName', minWidth: 100, title: '房间类型', align: "center"},
+                {field: 'floorName', minWidth: 100, title: '所属楼层', align: "center"},
+                {field: 'statusStr', minWidth: 100, title: '房间状态', align: "center"},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             page: true,
@@ -191,7 +216,28 @@
                 }
             }
         });
-
+        //监听头部工具栏事件
+        //toolbar是头部工具栏事件
+        //currentTableFilter是表格lay-filter过滤器的值
+        table.on("toolbar(currentTableFilter)",function (obj) {
+            switch (obj.event) {
+                case "add"://添加按钮
+                    openAddWindow();//打开添加窗口
+                    break;
+            }
+        });
+        //监听行工具栏
+        table.on("tool(currentTableFilter)",function (obj) {
+            console.log(obj);
+            switch (obj.event) {
+                case "edit"://编辑按钮
+                    openUpDateWindow(obj.data);//打开修改窗口
+                    break;
+                case "delete"://删除按钮
+                    deleteById(obj.data);
+                    break;
+            }
+        });
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
@@ -203,30 +249,6 @@
             });
             return false;
         });
-
-        //监听头部工具栏事件
-        //toolbar是头部工具栏事件
-        //currentTableFilter是表格lay-filter过滤器的值
-        table.on("toolbar(currentTableFilter)",function (obj) {
-            switch (obj.event) {
-                case "add"://添加按钮
-                    openAddWindow();//打开添加窗口
-                    break;
-            }
-        });
-        //监听行工具栏事件
-        table.on("tool(currentTableFilter)",function (obj) {
-            console.log(obj);
-            switch (obj.event) {
-                case "edit"://编辑按钮
-                    openUpdateWindow(obj.data);//打开修改窗口
-                    break;
-                case "delete"://删除按钮
-                    deleteById(obj.data);
-                    break;
-            }
-        });
-
         var url;//提交地址
         var mainIndex;//打开窗口的索引
         /**
@@ -235,21 +257,32 @@
         function openAddWindow() {
             mainIndex = layer.open({
                 type: 1,//打开类型
-                title: "添加房型",//窗口标题
+                title: "添加房间",//窗口标题
                 area: ["800px", "500px"],//窗口宽高
                 content: $("#addOrUpdateWindow"),//引用的内容窗口
+                maxmin: true,//窗口显示最大最小化
                 success: function () {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
                     //添加的提交请求
-                    url = "/admin/roomType/addRoomType";
+                    url = "/admin/room/addRoom";
                     //重置默认图片
                     $(".thumbImg").attr("src","/hotel/show/images/defaultimg.jpg");
                     //重置图片隐藏域的值
                     $("#photo").val("images/defaultimg.jpg");
                 }
             });
+            //设置窗口打开时最大化显示
+            layer.full(mainIndex);
+            //初始化富文本编辑器
+            detailIndex = layedit.build("roomdesc",{
+                uploadImage:{
+                    url:"/admin/file/uploadFile",//文件上传地址
+                    type:"post"//提交方式
+                }
+            });
         }
+
         //渲染文件上传区域
         upload.render({
             elem:".thumbImg",//绑定元素
@@ -266,45 +299,135 @@
                 $("#photo").val(res.imagePath);
             }
         });
+        //查询房型下拉列表
+        $.get("/admin/roomType/findAll",function(result){
+            var html = "";
+            for (var i = 0; i < result.length; i++) {
+                html +="<option value='"+result[i].id+"'>"+result[i].typename+"</option>"
+            }
+            //将网页代码追加到下拉列表中
+            $("[name='roomtypeid']").append(html);
+            //重新渲染下拉列表
+            form.render("select");
+        },"json");
+        //查询楼层下拉列表
+        $.get("/admin/floor/findAll",function(result){
+            var html = "";
+            for (var i = 0; i < result.length; i++) {
+                html +="<option value='"+result[i].id+"'>"+result[i].name+"</option>"
+            }
+            //将网页代码追加到下拉列表中
+            $("[name='floorid']").append(html);
+            //重新渲染下拉列表
+            form.render("select");
+        },"json");
+        /**
+         * 删除房间
+         * @param data
+         */
+        function deleteById(data) {
+            //判断该房间是否能够删除(只有状态为可预订的才能删除)
+            if(data.status==3){
+                //提示是否删除
+                //提示用户是否删除该房间
+                layer.confirm("确定要删除[<font color='red'>"+data.roomnum+"</font>]房间吗", {icon: 3, title:'提示'}, function(index){
+                    //发送ajax请求进行删除
+                    $.post("/admin/room/deleteById",{"id":data.id},function(result){
+                        if(result.success){
+                            //刷新数据表格
+                            tableIns.reload();
+                        }
+                        //提示
+                        layer.msg(result.message);
+                    },"json");
+
+                    layer.close(index);
+                });
+            }else{
+                layer.msg("只能删除状态为可预订的房间！");
+            }
+        }
+
+
         /**
          * 打开修改窗口
          */
-        function openUpdateWindow(data) {
+        function openUpDateWindow(data) {
             mainIndex = layer.open({
                 type: 1,//打开类型
-                title: "修改房型",//窗口标题
+                title: "修改房间",//窗口标题
                 area: ["800px", "500px"],//窗口宽高
                 content: $("#addOrUpdateWindow"),//引用的内容窗口
+                maxmin: true,//窗口显示最大最小化
                 success: function () {
                     //表单数据回显
                     form.val("dataFrm",data);
                     //修改的提交请求
-                    url = "/admin/roomType/updateRoomType";
+                    url = "/admin/room/updateRoom";
                     //图片回显
                     $(".thumbImg").attr("src","/hotel/show/"+data.photo);
                     //图片隐藏域的值回显
                     $("#photo").val(data.photo);
                 }
             });
+            //设置窗口打开时最大化显示
+            layer.full(mainIndex);
+            //初始化富文本编辑器
+            detailIndex = layedit.build("roomdesc",{
+                uploadImage:{
+                    url:"/admin/file/uploadFile",//文件上传地址
+                    type:"post"//提交方式
+                }
+            });
         }
 
-        //监听表单提交事件
-        form.on("submit(doSubmit)",function (data){
-            //发送ajax请求提交
-            $.post(url,data.field,function (result){
-                //提示成功信息
-                if(result.success){
+        /**
+         * 删除房间
+         * @param data
+         */
+        function deleteById(data) {
+            //判断该房间是否能够删除(只有状态为可预订的才能删除)
+            if(data.status==3){
+                //提示是否删除
+                //提示用户是否删除该房间
+                layer.confirm("确定要删除[<font color='red'>"+data.roomnum+"</font>]房间吗", {icon: 3, title:'提示'}, function(index){
+                    //发送ajax请求进行删除
+                    $.post("/admin/room/deleteById",{"id":data.id},function(result){
+                        if(result.success){
+                            //刷新数据表格
+                            tableIns.reload();
+                        }
+                        //提示
+                        layer.msg(result.message);
+                    },"json");
 
+                    layer.close(index);
+                });
+            }else{
+                layer.msg("只能删除状态为可预订的房间！");
+            }
+        }
+
+
+        //监听表单提交事件
+        form.on("submit(doSubmit)",function (data) {
+            //将富文本编辑器的内容同步到文本域textarea中
+            layedit.sync(detailIndex);
+            //$("#dataFrm").serialize()：一次性获取表单的数据，要求表单标签必须有name属性值
+            $.post(url,$("#dataFrm").serialize(),function(result){
+                if(result.success){
                     //刷新数据表格
                     tableIns.reload();
                     //关闭窗口
                     layer.close(mainIndex);
                 }
+                //提示信息
                 layer.msg(result.message);
             },"json");
             //禁止页面刷新
             return false;
-        })
+        });
+x
 
     });
 </script>

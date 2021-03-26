@@ -1,59 +1,53 @@
 package com.bdqn.controller.admin;
 
 import com.alibaba.fastjson.JSON;
-import com.bdqn.entity.RoomType;
-import com.bdqn.service.RoomTypeService;
+import com.bdqn.entity.Room;
+import com.bdqn.service.RoomService;
 import com.bdqn.utils.DataGridViewResult;
 import com.bdqn.utils.SystemConstant;
-import com.bdqn.utils.UUIDUtils;
-import com.bdqn.vo.RoomTypeVo;
+import com.bdqn.vo.RoomVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/roomType")
-public class RoomTypeController {
+@RequestMapping("/admin/room")
+public class RoomController {
+
+
     @Resource
-    private RoomTypeService roomTypeService;
+    private RoomService roomService;
     /**
      * 查询房型列表
-     * @param roomTypeVo
+     * @param roomVo
      * @return
      */
     @RequestMapping("/list")
-    public DataGridViewResult list(RoomTypeVo roomTypeVo){
+    public DataGridViewResult list(RoomVo roomVo){
         //设置分页信息
-        PageHelper.startPage(roomTypeVo.getPage(),roomTypeVo.getLimit());
+        PageHelper.startPage(roomVo.getPage(),roomVo.getLimit());
         //调用查询的方法
-        List<RoomType> roomTypeList = roomTypeService.findRoomTypeList(roomTypeVo);
+        List<Room> roomList = roomService.findRoomListByPage(roomVo);
         //创建分页对象
-        PageInfo<RoomType> pageInfo = new PageInfo<RoomType>(roomTypeList);
+        PageInfo<Room> pageInfo = new PageInfo<Room>(roomList);
         //返回数据
         return new DataGridViewResult(pageInfo.getTotal(),pageInfo.getList());
     }
-
     /**
-     * 添加房型
-     * @param roomType
+     * 添加房间
+     * @param room
      * @return
      */
-    @RequestMapping("/addRoomType")
-    public String addRoomType(RoomType roomType){
+    @RequestMapping("/addRoom")
+    public String addRoom(Room room){
         Map<String,Object> map = new HashMap<String,Object>();
-        if(roomTypeService.addRoomType(roomType)>0){
+        if(roomService.addRoom(room)>0){
             map.put(SystemConstant.SUCCESS,true);//成功
             map.put(SystemConstant.MESSAGE,"添加成功");
         }else{
@@ -63,14 +57,14 @@ public class RoomTypeController {
         return JSON.toJSONString(map);
     }
     /**
-     * 修改房型
-     * @param roomType
+     * 修改房间
+     * @param room
      * @return
      */
-    @RequestMapping("/updateRoomType")
-    public String updateRoomType(RoomType roomType){
+    @RequestMapping("/updateRoom")
+    public String updateRoom(Room room){
         Map<String,Object> map = new HashMap<String,Object>();
-        if(roomTypeService.updateRoomType(roomType)>0){
+        if(roomService.updateRoom(room)>0){
             map.put(SystemConstant.SUCCESS,true);//成功
             map.put(SystemConstant.MESSAGE,"修改成功");
         }else{
@@ -80,11 +74,20 @@ public class RoomTypeController {
         return JSON.toJSONString(map);
     }
     /**
-     * 查询所有房间类型
+     * 删除房间
+     * @param id
      * @return
      */
-    @RequestMapping("/findAll")
-    public String findAll(){
-        return JSON.toJSONString(roomTypeService.findRoomTypeList(null));
+    @RequestMapping("/deleteById")
+    public String deleteById(Integer id){
+        Map<String,Object> map = new HashMap<String,Object>();
+        if(roomService.deleteById(id)>0){
+            map.put(SystemConstant.SUCCESS,true);//成功
+            map.put(SystemConstant.MESSAGE,"删除成功");
+        }else{
+            map.put(SystemConstant.SUCCESS,false);//失败
+            map.put(SystemConstant.MESSAGE,"删除失败");
+        }
+        return JSON.toJSONString(map);
     }
 }

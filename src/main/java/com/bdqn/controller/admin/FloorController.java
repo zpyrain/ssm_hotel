@@ -76,4 +76,13 @@ public class FloorController {
         }
         return JSON.toJSONString(map);
     }
+    /**
+     * 查询所有楼层
+     * @return
+     */
+    @RequestMapping("/findAll")
+    public String findAll(){
+        return JSON.toJSONString(floorService.findFloorList(null));
+    }
+
 }
