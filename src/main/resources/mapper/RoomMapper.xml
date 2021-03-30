@@ -59,5 +59,13 @@
     <delete id="deleteById">
         delete from t_room where id = #{id}
     </delete>
-
+    <select id="findRoomListByFloorId" resultType="com.bdqn.entity.Room">
+        select t1.*,t2.typeName,t2.price from t_room t1 inner join t_room_type t2 on t2.id = t1.roomTypeId
+    </select>
+    <select id="findById" resultType="com.bdqn.entity.Room">
+        select t1.*,t2.`typeName`,t2.`price`,t3.`name` as floorName,t2.`bedNum` from t_room t1
+        inner join t_room_type t2 on t2.id = t1.roomTypeId
+        inner join t_floor t3 on t3.id =t1.floorId
+        where t1.id =#{id}
+    </select>
 </mapper>

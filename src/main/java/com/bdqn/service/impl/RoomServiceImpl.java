@@ -40,4 +40,14 @@ public class RoomServiceImpl implements RoomService {
     public int deleteById(int id) {
         return roomMapper.deleteById(id);
     }
+
+    @Override
+    public List<Room> findRoomListByFloorId() {
+        return roomMapper.findRoomListByFloorId();
+    }
+
+    @Override
+    public Room findById(Integer id) {
+        return roomMapper.findById(id);
+    }
 }

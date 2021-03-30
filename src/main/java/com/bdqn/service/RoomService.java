@@ -2,6 +2,7 @@ package com.bdqn.service;
 
 import com.bdqn.entity.Room;
 import com.bdqn.vo.RoomVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -31,4 +32,15 @@ public interface RoomService {
      * @return
      */
     int deleteById(int id);
+    /**
+     * 根据楼层查询房间列表
+     * @return
+     */
+    List<Room> findRoomListByFloorId();
+    /**
+     * 查看房间详情
+     * @param id
+     * @return
+     */
+    Room findById(Integer id);
 }

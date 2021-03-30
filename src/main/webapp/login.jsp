@@ -22,14 +22,14 @@
         <div class="layui-form component" lay-filter="LAY-site-header-component"></div>
         <ul class="layui-nav" id="layui-nav-userinfo">
             <li data-id="index" class="layui-nav-item layui-hide-xs"><a class="fly-case-active" data-type="toTopNav"
-                                                                        href="JavaScript:void(0);">首页</a></li>
+                                                                                   href="JavaScript:void(0);">首页</a></li>
             <li data-id="room" class="layui-nav-item layui-hide-xs"><a class="fly-case-active"
                                                                        data-type="toTopNav"
                                                                        href="JavaScript:void(0);">房间</a></li>
-            <li data-id="login" class="layui-nav-item layui-hide-xs "><a class="fly-case-active" data-type="toTopNav"
+            <li data-id="login" class="layui-nav-item layui-hide-xs layui-this"><a class="fly-case-active" data-type="toTopNav"
                                                                          href="/login.jsp">登入</a></li>
-            <li data-id="register" class="layui-nav-item layui-hide-xs layui-this"><a class="fly-case-active" data-type="toTopNav"
-                                                                                      href="/register.jsp">注册</a></li>
+            <li data-id="register" class="layui-nav-item layui-hide-xs "><a class="fly-case-active" data-type="toTopNav"
+                                                                            href="/register.jsp">注册</a></li>
             <span class="layui-nav-bar" style="left: 560px; top: 55px; width: 0px; opacity: 0;"></span></ul>
     </div>
 </div>
@@ -55,7 +55,7 @@
 </div>
 <!-- 中间区域结束 -->
 
-<!-- 注册start -->
+<!-- 登录start -->
 <div class="layui-container shopdata">
     <div class="layui-card shopdata-intro">
 
@@ -65,23 +65,14 @@
                 <div class="login-cont w1200">
                     <div class="form-box">
                         <form class="layui-form" action="">
-                            <legend>用户注册</legend>
+                            <legend>前台用户登录</legend>
                             <div class="layui-form-item">
-
                                 <div class="layui-inline iphone">
                                     <div class="layui-input-inline">
                                         <i class="layui-icon layui-icon-user iphone-icon"></i>
-                                        <input type="text" name="loginName" id="mNickname" lay-verify="required" lay-reqText="请输入昵称"  placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                                        <input type="tel" name="loginName" id="phone" lay-verify="required" lay-reqText="请输入登录用户名" placeholder="请输入登录用户名" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
-
-                                <div class="layui-inline iphone">
-                                    <div class="layui-input-inline">
-                                        <i class="layui-icon layui-icon-cellphone iphone-icon"></i>
-                                        <input type="tel" name="phone" id="phone" lay-verify="required|phone" lay-reqText="请输入手机号" placeholder="请输入手机号" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-
                                 <div class="layui-inline iphone">
                                     <div class="layui-input-inline">
                                         <i class="layui-icon layui-icon-password iphone-icon"></i>
@@ -91,7 +82,7 @@
                             </div>
                             <div class="layui-form-item login-btn">
                                 <div class="layui-input-block">
-                                    <button class="layui-btn" style="background-color: #009688" lay-submit lay-filter="register">提交</button>
+                                    <button class="layui-btn" lay-submit="" lay-filter="login" style="background-color: #009688">登录</button>
                                 </div>
                             </div>
                         </form>
@@ -104,7 +95,7 @@
     </div>
 
 </div>
-<!-- 登注册end -->
+<!-- 登录end -->
 
 <!-- 底部 -->
 <div class="fly-footer">
@@ -138,40 +129,15 @@
             ,arrow: 'always' //始终显示箭头
         });
 
-        var flag = false;//定义变量，标识是否存在
-
-        //当用户名输入框失去焦点事件触发验证
-        $("#mNickname").blur(function () {
-            //获取用户名
-            var loginName = $("#mNickname").val().trim();
-            //判断用户名是否为空，不为空则发送请求验证
-            if(loginName.length>0){
-                $.get("/user/checkName",{"loginName":loginName},function(result){
-                    if(result.exist){
-                        layer.alert(result.message,{icon:5});
-                        //修改状态为true，表示已存在
-                        flag = true;
-                    }else{
-                        flag = false;//不存在
-                    }
-                },"json");
-            }
-        });
-        //表单提交事件
-        form.on("submit(register)",function (data) {
-            //判断是否存在
-            if(flag){
-                layer.alert("用户名已被使用，请重新输入！",{icon:5})
-            }else{
-            //发送请求
-            $.post("/user/register",data.field,function(result){
+        form.on("submit(login)",function (data) {
+            $.post("/user/login",data.field,function(result){
                 if(result.success){
-                    layer.alert(result.message,{icon:6});
+                    //跳转到首页
+                    location.href="/index.html";
                 }else{
                     layer.alert(result.message,{icon:5});
                 }
             },"json");
-            }
             return false;
         });
 
