@@ -170,8 +170,8 @@
                 {field: 'livenum', minWidth: 100, title: '可住人数', align: "center"},
                 {field: 'bednum', minWidth: 100, title: '床位数', align: "center"},
                 {field: 'roomnum', minWidth: 100, title: '房间数', align: "center"},
-                {field: 'reservednum', minWidth: 100, title: '可用房间数', align: "center"},
-                {field: 'avilablenum', minWidth: 100, title: '已预订数', align: "center"},
+                {field: 'avilablenum', minWidth: 100, title: '可用房间数', align: "center"},
+                {field: 'reservednum', minWidth: 100, title: '已预订数', align: "center"},
                 {field: 'livednum', minWidth: 100, title: '已入住数', align: "center"},
                 {field: 'status', minWidth: 100, title: '状态', align: "center",templet:function (d) {
                         return d.status == 1 ? "可预订" : "<font color='red'>房型已满</font>"

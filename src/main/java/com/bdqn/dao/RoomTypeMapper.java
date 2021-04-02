@@ -2,6 +2,7 @@ package com.bdqn.dao;
 
 import com.bdqn.entity.RoomType;
 import com.bdqn.vo.RoomTypeVo;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -26,4 +27,12 @@ public interface RoomTypeMapper {
      * @return
      */
     int updateRoomType(RoomType roomType);
+
+    /**
+     * 根据房型ID查询房间ID
+     * @param roomtypeid
+     * @return
+     */
+    @Select("select * from t_room_type where id= #{id}")
+    RoomType findById(Integer roomtypeid);
 }

@@ -100,4 +100,20 @@ public class SystemController {
     public String toRoomManager(){
         return "admin/room/roomManager";
     }
+    /**
+     * 去到订单管理页面
+     * @return
+     */
+    @RequestMapping("/toOrdersManager")
+    public String toOrdersManager(){
+        return "admin/orders/ordersManager";
+    }
+    /**
+     * 去到入住管理页面
+     * @return
+     */
+    @RequestMapping("/toCheckinManager")
+    public String toCheckinManager(){
+        return "admin/checkin/checkinManager";
+    }
 }

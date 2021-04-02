@@ -1,18 +1,17 @@
-package com.bdqn.dao;
+package com.bdqn.service;
 
 import com.bdqn.entity.Orders;
 import com.bdqn.vo.OrdersVo;
 
 import java.util.List;
 
-public interface OrdersMapper {
+public interface OrdersService {
     /**
      *添加订单
      * @param orders
      * @return
      */
     int addOrders(Orders orders);
-
     /**
      * 查询订单列表
      * @param ordersVo
@@ -20,10 +19,5 @@ public interface OrdersMapper {
      */
     List<Orders> findOrdersList(OrdersVo ordersVo);
 
-    /**
-     * 修改订单
-     * @param orders
-     * @return
-     */
     int updateOrders(Orders orders);
 }

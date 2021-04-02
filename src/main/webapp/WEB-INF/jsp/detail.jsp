@@ -327,12 +327,14 @@
         //监听表单提交事件
         form.on("submit(doSubmit)",function (data) {
 
-            console.log(data.field)
+            console.log(data.field);
 
             $.post("/orders/addOrders",data.field,function(result){
+                console.log(result.success);
                 if(result.success){
                     layer.alert(result.message,{icon:6});
                     //关闭窗口
+                    setTimeout(1000);
                     layer.close(mainIndex);
                     //刷新页面
                     window.location.reload();
